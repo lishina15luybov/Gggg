@@ -1,0 +1,37 @@
+#define _USE_MATH_DEFINES // for C
+#include <stdio.h>
+#include <math.h>
+/**
+ * @brief рассчитывает объем шара
+ * @param side радиус шара
+ * @return возвращает рассчитанный объем
+ */
+double getA (const double side);
+/**
+ * @brief рассчитывает площадь поверхности шара
+ * @param side радиус шара
+ * @return возвращает рассчитанную площадь поверхности
+ */
+double getB (const double side);
+/**
+ * @brief точка входа в программу
+ * @return возвращает 0, если программма выполнена корректно
+ */
+int main(void)
+{
+    double side;
+    scanf("%lf",&side);
+    printf("радиус равен %.2lf\n", side);
+    printf("объем равен %.2lf",getA(side));
+    printf("площадь поверхности равна %.2lf",getB(side));
+
+    return 0;
+}
+double getA (const double side)
+{
+    return 4/3 * M_PI * (double)pow(side, 3);
+}
+double getB (const double side)
+{
+    return 4 * M_PI * (double)pow(side, 2);
+}
