@@ -2,13 +2,22 @@
 #include <stdio.h>
 /**
  * @brief рассчитывает функцию a по заданной формуле 
- * @brief рассчитывает функцию b по заданной формуле
+ * @param x - значение параметра x
+ * @return рассчитанное значение
+ */
+double geta(const double x);
+/**
+ * @brief рассчитывает функцию b по заданной формуле 
  * @param x - значение параметра x
  * @param y - значение параметра y
  * @return рассчитанное значение
  */
-double geta(const double x);
 double getb(const double x, const double y);
+
+/**
+ * @brief Точка входа в программу
+ * @return Возвращает 0, если программа выполнена корректно
+ */
 int main (void) 
 {
     const double x = 0.335;
