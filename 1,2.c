@@ -19,7 +19,7 @@ double getSquare (const double side);
  */
 int main(void)
 {
-    double side;
+    double side = 0;
     scanf("%lf",&side);
     printf("радиус равен %.2lf\n", side);
     printf("объем равен %.2lf",getVolume(side));
