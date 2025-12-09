@@ -84,7 +84,7 @@ double getValue() {
 }
 
 int checkZero(const double i) {
-    if (i < DBL_EPSILON) {
+    if ((i < DBL_EPSILON) && (i < 0)) {
         return 1;
     }
     return 0;
