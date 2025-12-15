@@ -1,78 +1,75 @@
 #include <stdio.h>
 #include <stdlib.h> 
-/** 
-*@brief Считывает значение, введенное с клавиатуру с проверкой ввода
-*@return считанное значение
-*/
-double value();
 
 /** 
-*@brief Точка входа в программу
-*@param x введенное значение пользователем
-*@param y введенное значение пользователем
-*@param z введенное значение пользователем
-*@return вовзвращает 0, если программа выполнена корректно
-*/
-int main()
+ * @brief Считывает значение, введенное с клавиатуры с проверкой ввода
+ * @return считанное значение
+ */
+double value(void);
+
+/** 
+ * @brief Вычисляет квадрат или четвертую степень числа в зависимости от знака
+ * @param num число для обработки
+ * @return результат вычисления
+ */
+double process_number(double num);
+
+/** 
+ * @brief Точка входа в программу
+ * @return возвращает 0, если программа выполнена корректно
+ */
+int main(void)
 {
     double x = 0;
-    scanf("%lf",&x);
     double y = 0;
-    scanf("%lf",&y);
     double z = 0;
-    scanf("%lf",&z);
-    printf("значение первое %.2lf\n", x);
-    printf("значение второе %.2lf\n", y);
-    printf("значение третье %.2lf\n", z);
-    if (x >= 0)
-    {
-        double result = x * x;
-        printf("Число %.2lf (неотрицательное)\n", x);
-        printf("Результат: %.2lf^2 = %.2lf\n\n", x, result);
-    }
-    else
-    {
-        double result = x * x * x * x;
-        printf("Число %.2lf (отрицательное)\n", x);
-        printf("Результат: (%.2lf)^4 = %.2lf\n\n", x, result);
-    }
-    if (y >= 0)
-    {
-        double result = y * y;
-        printf("Число %.2lf (неотрицательное)\n", y);
-        printf("Результат: %.2lf^2 = %.2lf\n\n", y, result);
-    }
-    else
-    {
-        double result = y * y * y * y;
-        printf("Число %.2lf (отрицательное)\n", y);
-        printf("Результат: (%.2lf)^4 = %.2lf\n\n", y, result);
-    }
-    if (z >= 0)
-    {
-        double result = z * z;
-        printf("Число %.2lf (неотрицательное)\n", z);
-        printf("Результат: %.2lf^2 = %.2lf\n\n", z, result);
-    }
-    else
-    {
-        double result = z * z * z * z;
-        printf("Число %.2lf (отрицательное)\n", z);
-        printf("Результат: (%.2lf)^4 = %.2lf\n\n", z, result);
-    }
+    printf("Введите три числа:\n");
+    printf("Первое число: ");
+    x = value();
+    
+    printf("Второе число: ");
+    y = value();
+    
+    printf("Третье число: ");
+    z = value();
+    
+    printf("\nВведенные значения:\n");
+    printf("Первое: %.2lf\n", x);
+    printf("Второе: %.2lf\n", y);
+    printf("Третье: %.2lf\n", z);
+    printf("\n");
+    
+    double result_x = process_number(x);
+    printf("Результат 1: %.2lf\n\n", result_x);
+    
+    double result_y = process_number(y);
+    printf("Результат 2: %.2lf\n\n", result_y);
+    
+    double result_z = process_number(z);
+    printf("Результат 3: %.2lf\n\n", result_z);
     
     return 0;
-    
-
 }
 
-double value()
+double value(void)
 {
-    double value = 0;
-    if (!scanf("%lf",&value))
+    double input_value = 0;
+    if (scanf("%lf", &input_value) != 1)
     {
         printf("Ошибка! Введено неверное значение!\n");
         abort();
     }
-    return value;
+    return input_value;
+}
+
+double process_number(double num)
+{
+    if (num >= 0)
+    {
+        return num * num;
+    }
+    else
+    {
+        return num * num * num * num;
+    }
 }
