@@ -13,7 +13,7 @@ int Value(void);
  * @param message текстовое сообщение о необходимости ввода массива
  * @return размер массива (количество его элементов)
  */
-size_t getSize(char* message);
+size_t getSize(const char* message);
 
 /**
  * @brief Считывает значения элементов массива
@@ -27,14 +27,14 @@ void fillArray(int* arr, const size_t size);
  * @param arr массив
  * @param size размер массива
  */
-void printArray(int* arr, const size_t size);
+void printArray(const int* arr, const size_t size);
 
 /**
  * @brief Вычисляет сумму чётных элементов массива
  * @param arr массив
  * @param size размер массива
  */
-void sumEven(int* arr, const size_t size);
+void sumEven(const int* arr, const size_t size);
 
 /**
  * @brief Заполняет массив случайными числами в пределах введённого пользователем диапазона
@@ -64,7 +64,7 @@ int replaceFirstAbsLastNegative(int* copyArr, const size_t size);
  * @param arr массив
  * @param size размер массива
  */
-void countTwoDigitNumbers(int* arr, const size_t size);
+void countTwoDigitNumbers(const int* arr, const size_t size);
 
 /**
  * @brief RANDOM - заполнение массива случайными числами в пределах введённого пользователем диапазона
@@ -73,18 +73,19 @@ void countTwoDigitNumbers(int* arr, const size_t size);
 enum {RANDOM = 1, MANUAL};
 
 /**
+ * @brief выделяет память для массива целых чисел
+ * @param size размер массива
+ */
+int* allocate_int_array_with_check(const size_t size)
+
+/**
  * @brief Точка входа в программу
  * @return 0, если программа выполнена корректно, иначе 1.
  */
 int main(void)
 {
     size_t size = getSize("Input size of an array:\n");
-    int* arr = malloc(size* sizeof(int));
-    if (arr == NULL)
-    {
-        fprintf(stderr,"Error");
-        exit(1);
-    }
+    int* my_array = allocate_int_array_with_check(size);
     printf("Chose the method of filling the array:\n%d - by random\n%d - manually\n", RANDOM, MANUAL);
     int choice = Value();
     switch(choice)
@@ -113,6 +114,16 @@ int main(void)
     return 0;
 }
 
+int* allocate_int_array_with_check(size_t size) 
+{
+    int* arr = malloc(size * sizeof(int));
+    if (arr == NULL) 
+    {
+        fprintf(stderr, "Error");
+        exit(1);
+    }
+    return arr;
+}
 int Value(void)
 {
     int value = 0;
