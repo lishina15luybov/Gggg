@@ -12,7 +12,7 @@ double value(void);
  * @param num число для обработки
  * @return результат вычисления
  */
-double process_number(double num);
+double process_number(const double num);
 
 /** 
  * @brief Точка входа в программу
@@ -20,18 +20,15 @@ double process_number(double num);
  */
 int main(void)
 {
-    double x = 0;
-    double y = 0;
-    double z = 0;
     printf("Введите три числа:\n");
     printf("Первое число: ");
-    x = value();
+    double x = value();
     
     printf("Второе число: ");
-    y = value();
+    double y = value();
     
     printf("Третье число: ");
-    z = value();
+    double z = value();
     
     printf("\nВведенные значения:\n");
     printf("Первое: %.2lf\n", x);
