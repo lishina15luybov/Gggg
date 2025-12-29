@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #define scanf_s scanf
+
+/**
+ * @brief Проверяет указатель на NULL
+ * @param ptr указатель для проверки
+ * @param func_name имя функции, в которой выполняется проверка
+ */
+void check_null_pointer(const void* ptr, const char* func_name);
 
 /**
  * @brief Считывает введённое с клавиатуры целое значение и проверяет на правильность ввода
@@ -76,7 +84,7 @@ enum {RANDOM = 1, MANUAL};
  * @brief выделяет память для массива целых чисел
  * @param size размер массива
  */
-int* allocate_int_array_with_check(const size_t size)
+int* allocate_int_array_with_check(const size_t size);
 
 /**
  * @brief Точка входа в программу
@@ -91,27 +99,36 @@ int main(void)
     switch(choice)
         {
             case RANDOM:
-                fillRandom(arr, size);
+                fillRandom(my_array, size);
                 break;
             case MANUAL:
-                fillArray(arr, size);
+                fillArray(my_array, size);
                 break;
             default:
                 fprintf(stderr,"Error.");
-                free(arr);
+                free(my_array);
                 exit(1);
         }
-    printArray(arr, size);
+    printArray(my_array, size);
     printf("\n");
-    sumEven(arr, size);
+    sumEven(my_array, size);
     printf("\n");
-    countTwoDigitNumbers(arr, size);
+    countTwoDigitNumbers(my_array, size);
     printf("\n");
-    int* copyArr = copyArray(arr, size);
+    int* copyArr = copyArray(my_array, size);
     replaceFirstAbsLastNegative(copyArr, size);
     free(copyArr);
-    free(arr);
+    free(my_array);
     return 0;
+}
+
+void check_null_pointer(const void* ptr, const char* func_name)
+{
+    if (ptr == NULL)
+    {
+        fprintf(stderr, "Error: NULL pointer passed to %s\n", func_name);
+        exit(1);
+    }
 }
 
 int* allocate_int_array_with_check(size_t size) 
@@ -119,29 +136,32 @@ int* allocate_int_array_with_check(size_t size)
     int* arr = malloc(size * sizeof(int));
     if (arr == NULL) 
     {
-        fprintf(stderr, "Error");
+        fprintf(stderr, "Error: Memory allocation failed.\n");
         exit(1);
     }
     return arr;
 }
+
 int Value(void)
 {
     int value = 0;
     int result = scanf("%d", &value);
-    if (result != 1){
-        fprintf(stderr, "Input error");
+    if (result != 1)
+    {
+        fprintf(stderr, "Input error\n");
         exit(1);
     }
     return value;
 }
 
-size_t getSize(char* message)
+size_t getSize(const char* message)
 {
+    check_null_pointer(message, "getSize");
     printf("%s", message);
     int value = Value();
     if (value <= 0)
     {
-        fprintf(stderr,"Input error");
+        fprintf(stderr,"Input error: size must be positive\n");
         exit(1);
     }
     return (size_t)value;
@@ -149,6 +169,7 @@ size_t getSize(char* message)
 
 void fillArray(int* arr, const size_t size)
 {
+    check_null_pointer(arr, "fillArray");
     for (size_t i = 0; i < size; i++)
     {
         printf("Input %zu element of array:", i);
@@ -156,8 +177,9 @@ void fillArray(int* arr, const size_t size)
     }
 }
 
-void printArray(int* arr, const size_t size)
+void printArray(const int* arr, const size_t size)
 {
+    check_null_pointer(arr, "printArray");
     printf("Your array is:\n");
     for (size_t i = 0; i < size; i++)
     {
@@ -166,8 +188,9 @@ void printArray(int* arr, const size_t size)
     printf("\n");
 }
 
-void sumEven(int* arr, const size_t size)
+void sumEven(const int* arr, const size_t size)
 {
+    check_null_pointer(arr, "sumEven");
     int result = 0;
     for (size_t i = 0; i < size; i++)
     {
@@ -181,14 +204,17 @@ void sumEven(int* arr, const size_t size)
 
 void fillRandom(int* arr, const size_t size)
 {
+    check_null_pointer(arr, "fillRandom");
     printf("diapozon start:\n");
     int start = Value();
     printf("diapozon end:\n");
     int end = Value();
-    if (start >= end) {
+    if (start >= end) 
+    {
         fprintf(stderr, "Error: end must be more than start\n");
         exit(1);
     }
+    srand(time(NULL)); // Initialize random seed
     for (size_t i = 0; i < size; i++)
     {
         arr[i] = rand() % (end - start + 1) + start;
@@ -197,7 +223,13 @@ void fillRandom(int* arr, const size_t size)
 
 int* copyArray(const int* arr, const size_t size)
 {
+    check_null_pointer(arr, "copyArray");
     int* copyArr = malloc(sizeof(int)*size);
+    if (copyArr == NULL) 
+    {
+        fprintf(stderr, "Error: Memory allocation failed in copyArray\n");
+        exit(1);
+    }
     for (size_t i = 0; i<size; i++)
     {
         copyArr[i] = arr[i];
@@ -205,10 +237,13 @@ int* copyArray(const int* arr, const size_t size)
     return copyArr;
 }
 
-void countTwoDigitNumbers(int* arr, const size_t size) {
+void countTwoDigitNumbers(const int* arr, const size_t size) 
+{
+    check_null_pointer(arr, "countTwoDigitNumbers");
     int count = 0;
 
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) 
+    {
         if ((arr[i] >= 10 && arr[i] <= 99) || (arr[i] <= -10 && arr[i] >= -99)) {
             count++;
         }
@@ -216,19 +251,24 @@ void countTwoDigitNumbers(int* arr, const size_t size) {
     printf("Amount of 2-digit elements is %d.\n", count);
 }
 
-int replaceFirstAbsLastNegative(int* copyArr, const size_t size) {
+int replaceFirstAbsLastNegative(int* copyArr, const size_t size) 
+{
+    check_null_pointer(copyArr, "replaceFirstAbsLastNegative");
     int firstAbs = abs(copyArr[0]);
-    for (size_t i = size; i > 0; i--) {
-        if (copyArr[i-1] < 0) {
+    for (size_t i = size; i > 0; i--) 
+    {
+        if (copyArr[i-1] < 0) 
+        {
             copyArr[i-1] = firstAbs;
             printf("Your new array is:\n");
-            for (size_t j = 0; j < size; j++) {
+            for (size_t j = 0; j < size; j++) 
+            {
                 printf("%d ", copyArr[j]);
             }
             printf("\n");
             return 1;
         }
     }
-    printf("Your array has not negative elements.");
+    printf("Your array has not negative elements.\n");
     return 0;
 }
