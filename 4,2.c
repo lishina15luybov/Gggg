@@ -15,7 +15,14 @@ int Value(void);
  * @param message текстовое сообщение о необходимости ввода массива
  * @return размер массива (количество его элементов)
  */
-size_t getSize(char* message);
+size_t getSize(const char* message);
+
+/**
+ * @brief Создаёт динамический массив заданного размера
+ * @param size размер массива
+ * @return указатель на созданный массив
+ */
+int* createArray(const size_t size);
 
 /**
  * @brief Считывает значения элементов массива
@@ -29,7 +36,7 @@ void fillArray(int* arr, const size_t size);
  * @param arr массив
  * @param size размер массива
  */
-void printArray(int* arr, const size_t size);
+void printArray(const int* arr, const size_t size);
 
 /**
  * @brief Заполняет массив случайными числами в пределах введённого пользователем диапазона
@@ -104,12 +111,8 @@ enum {RANDOM = 1, MANUAL};
 int main(void)
 {
     size_t size = getSize("Input size of an array:\n");
-    int* arr = malloc(size* sizeof(int));
-    if (arr == NULL)
-    {
-        fprintf(stderr,"Error");
-        exit(1);
-    }
+    int* arr = createArray(size);
+    
     printf("Chose the method of filling the array:\n%d - by random\n%d - manually\n", RANDOM, MANUAL);
     int choice = Value();
     switch(choice)
@@ -126,14 +129,21 @@ int main(void)
                 exit(1);
         }
     printArray(arr, size);
+    
     int* copyArr = copyArray(arr, size);
+    int* copyArr2 = copyArray(arr, size);
+    
     replaceFirstNegativeFirstPositive(copyArr, size);
     printf("\n");
-    deleteDif7BelongsRange(copyArr, size);
+    
+    deleteDif7BelongsRange(copyArr2, size);
     printf("\n");
-    fromDtoA(copyArr, size);
+    
+    fromDtoA(copyArr2, size);
     printf("\n");
+    
     free(copyArr);
+    free(copyArr2);
     free(arr);
     return 0;
 }
@@ -142,15 +152,22 @@ int Value(void)
 {
     int value = 0;
     int result = scanf("%d", &value);
-    if (result != 1){
+    if (result != 1)
+    {
         fprintf(stderr, "Input error");
         exit(1);
     }
     return value;
 }
 
-size_t getSize(char* message)
+size_t getSize(const char* message)
 {
+    if (message == NULL)
+    {
+        fprintf(stderr, "Error: message pointer is NULL\n");
+        exit(1);
+    }
+    
     printf("%s", message);
     int value = Value();
     if (value <= 0)
@@ -161,8 +178,25 @@ size_t getSize(char* message)
     return (size_t)value;
 }
 
+int* createArray(const size_t size)
+{
+    int* arr = malloc(size * sizeof(int));
+    if (arr == NULL)
+    {
+        fprintf(stderr, "Error: memory allocation failed\n");
+        exit(1);
+    }
+    return arr;
+}
+
 void fillArray(int* arr, const size_t size)
 {
+    if (arr == NULL)
+    {
+        fprintf(stderr, "Error: array pointer is NULL\n");
+        exit(1);
+    }
+    
     for (size_t i = 0; i < size; i++)
     {
         printf("Input %zu element of array:", i);
@@ -170,8 +204,14 @@ void fillArray(int* arr, const size_t size)
     }
 }
 
-void printArray(int* arr, const size_t size)
+void printArray(const int* arr, const size_t size)
 {
+    if (arr == NULL)
+    {
+        fprintf(stderr, "Error: array pointer is NULL\n");
+        return;
+    }
+    
     printf("Your array is:\n");
     for (size_t i = 0; i < size; i++)
     {
@@ -182,15 +222,22 @@ void printArray(int* arr, const size_t size)
 
 void fillRandom(int* arr, const size_t size)
 {
+    if (arr == NULL)
+    {
+        fprintf(stderr, "Error: array pointer is NULL\n");
+        exit(1);
+    }
+    
     printf("diapozon start:\n");
     int start = Value();
     printf("diapozon end:\n");
     int end = Value();
-    if (start > end) {
+    if (start > end) 
+    {
         fprintf(stderr, "Error: start cannot be greater than end\n");
         exit(1);
     }
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     for (size_t i = 0; i < size; i++)
     {
         arr[i] = rand() % (end - start + 1) + start;
@@ -199,57 +246,83 @@ void fillRandom(int* arr, const size_t size)
 
 int* copyArray(const int* arr, const size_t size)
 {
-    int* copyArr = malloc(sizeof(int)*size);
     if (arr == NULL)
     {
-        fprintf(stderr,"Error");
+        fprintf(stderr, "Error: source array pointer is NULL\n");
         exit(1);
     }
-    for (size_t i = 0; i<size; i++)
+    
+    int* copyArr = createArray(size);
+    
+    for (size_t i = 0; i < size; i++)
     {
         copyArr[i] = arr[i];
     }
     return copyArr;
 }
 
-int replaceFirstNegativeFirstPositive(int* copyArr, const size_t size) {
+int replaceFirstNegativeFirstPositive(int* copyArr, const size_t size) 
+{
+    if (copyArr == NULL)
+    {
+        fprintf(stderr, "Error: array pointer is NULL\n");
+        exit(1);
+    }
+    
     printf("Replacing first negative element to first positive.\n");
     int firstPositive = 0;
     int firstNegative = 0;
     size_t negativeIndex = 0;
-    bool checkPositive = false; // булы для проверки на то, нашлось ли положительное/отрицательное число
-    bool checkNegative = false; 
-    for (size_t i = 0; i < size; i++) {
-        if (copyArr[i] < 0 && checkNegative != true) { //если отрицательное нашлось, мы больше ничего с положительными числами не меняем
+    bool checkPositive = false;
+    bool checkNegative = false;
+    
+    for (size_t i = 0; i < size; i++) 
+    {
+        if (copyArr[i] < 0 && !checkNegative) 
+        {
             firstNegative = copyArr[i];
             checkNegative = true;
             negativeIndex = i;
         }
-        if (copyArr[i] > 0 && checkPositive != true) { //аналогично для положительного
+        if (copyArr[i] > 0 && !checkPositive) 
+        {
             firstPositive = copyArr[i];
             checkPositive = true;
         }
-        if (checkPositive == true && checkNegative == true) { //досрочный выход из цикла, если оба числа найдены
+        if (checkPositive && checkNegative) 
+        {
             break;
         }
     }
-    if (firstPositive == 0) {
+    
+    if (!checkPositive) 
+    {
         printf("No positive elements.\n");
         return 0;
     }
-    if (firstNegative == 0) {
+    if (!checkNegative) 
+    {
         printf("No negative elements.\n");
         return 0;
     }
+    
     copyArr[negativeIndex] = firstPositive;
     printf("Your new array is:\n");
-    for (size_t j = 0; j < size; j++) {
+    for (size_t j = 0; j < size; j++) 
+    {
         printf("%d ", copyArr[j]);
     }
     return 1;
 }
 
-int deleteDif7BelongsRange(int* copyArr, const size_t size) {
+int deleteDif7BelongsRange(int* copyArr, const size_t size) 
+{
+    if (copyArr == NULL)
+    {
+        fprintf(stderr, "Error: array pointer is NULL\n");
+        exit(1);
+    }
+    
     printf("Deletion all elements which separated by 7 and belongs to range.\n");
     printf("Input min:\n");
     int min = Value();
@@ -259,66 +332,107 @@ int deleteDif7BelongsRange(int* copyArr, const size_t size) {
         printf("max must be more than min.\n");
         return 0;
     }
+    
     int j = 0;
-    for (size_t i = 0; i < size; i++) {
-        if (copyArr[i] % 7 == 0 && min <= copyArr[i] && copyArr[i] <= max) {
+    for (size_t i = 0; i < size; i++) 
+    {
+        if (copyArr[i] % 7 == 0 && min <= copyArr[i] && copyArr[i] <= max) 
+        {
             copyArr[i] = 0;
             j++;
         }
     }
-    if (j == 0) {
+    
+    if (j == 0) 
+    {
         printf("There are no such elements you need in this range. Your new array equals old array.\n");
         return 0;
     }
-    if (j == size) {
+    if (j == size) 
+    {
         printf("All of the elements are deleted.\n");
         return 0;
     }
+    
     replaceArray(copyArr, size);
     printf("Your new array is:\n");
-    for (size_t k = 0; k < size; k++) {
-        if (copyArr[k] != 0) {
+    for (size_t k = 0; k < size; k++) 
+    {
+        if (copyArr[k] != 0) 
+        {
             printf("%d ", copyArr[k]);
-            }
         }
+    }
     return 1;
 }
 
-int fromDtoA(int* copyArr, const size_t size) {
+int fromDtoA(int* copyArr, const size_t size) 
+{
+    if (copyArr == NULL)
+    {
+        fprintf(stderr, "Error: array pointer is NULL\n");
+        exit(1);
+    }
+    
     printf("Forming array A:\n");
     int k = 0;
-    for (size_t i = 0; i < size; i++) {
-        if (copyArr[i] != 0) {
-            if (i % 2 == 0) {
-                copyArr[i] = copyArr[i] * copyArr[i] + i;
-            }
-            else {
-                copyArr[i] = copyArr[i] * i;
-            }
+    
+    for (size_t i = 0; i < size; i++) 
+    {
+        if (copyArr[i] != 0) 
+        {
             k++;
         }
-        if (k == 0){
-            printf("There are no elements in new array.");
-            return 0;
+    }
+    
+    if (k == 0) 
+    {
+        printf("There are no elements in new array.");
+        return 0;
+    }
+    for (size_t i = 0; i < size; i++) 
+    {
+        if (copyArr[i] != 0) 
+        {
+            if (i % 2 == 0) 
+            {
+                copyArr[i] = copyArr[i] * copyArr[i] + (int)i;
+            }
+            else 
+            {
+                copyArr[i] = copyArr[i] * (int)i;
+            }
         }
     }
-    for (size_t j = 0; j < size; j++) {
-        if (copyArr[j] != 0) {
+    for (size_t j = 0; j < size; j++) 
+    {
+        if (copyArr[j] != 0) 
+        {
             printf("%d ", copyArr[j]);
         }
     }
     return 1;
 }
 
-int* replaceArray(int* copyArr, const size_t size) {
+int* replaceArray(int* copyArr, const size_t size) 
+{
+    if (copyArr == NULL)
+    {
+        fprintf(stderr, "Error: array pointer is NULL\n");
+        exit(1);
+    }
+    
     int NoZero = 0;
-    for (size_t i = 0; i < size; i++) {
-        if (copyArr[i] != 0) {
+    for (size_t i = 0; i < size; i++) 
+    {
+        if (copyArr[i] != 0) 
+        {
             copyArr[NoZero] = copyArr[i];
             NoZero++;
         }
     }
-    for (size_t j = NoZero; j < size; j++) {
+    for (size_t j = NoZero; j < size; j++) 
+    {
         copyArr[j] = 0;
     }
     return copyArr;
