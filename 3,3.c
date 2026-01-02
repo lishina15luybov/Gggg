@@ -119,12 +119,22 @@ double getRecurent(const int i, const double x)
 
 double getSumE(const double e, const double x)
 {
-    double current = 1;
+    double exact = cosFunc(x); 
+    double current = 1.0;
     double result = current;
-    for (int i = 1; fabs(current) > e; i++)
+    int i = 1;
+    int max_iterations = 1000; 
+    while (fabs(exact - result) > e && i <= max_iterations)
     {
         current *= getRecurent(i, x);
         result += current;
+        i++;
     }
+    
+    if (i > max_iterations) 
+    {
+        fprintf(stderr, "Warning: Maximum iterations reached for x = %.6lf\n", x);
+    }
+    
     return result;
 }
