@@ -1,4 +1,6 @@
 #include "point.h"
+#include <cmath>
+#include <limits>
 
 Point::Point(double x, double y, double z)
 {
@@ -24,24 +26,12 @@ double Point::getZ() const
 
 bool Point::operator==(const Point& p) const
 {
-    if (this->x == p.x && this->y == p.y && this->z == p.z)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return (std::abs(this->x - p.x) < std::numeric_limits<double>::epsilon() && 
+            std::abs(this->y - p.y) < std::numeric_limits<double>::epsilon() &&
+            std::abs(this->z - p.z) < std::numeric_limits<double>::epsilon());
 }
 
 bool Point::operator!=(const Point& p) const
 {
-    if (this->x != p.x || this->y != p.y || this->z != p.z)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return !(*this == p);
 }
