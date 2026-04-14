@@ -18,9 +18,7 @@ private:
         Node* next;
         explicit Node(const int value) : data(value), next(nullptr) {}
     };
-
-    Node* head;   
-    Node* tail;   
+   
     size_t count; 
 public:
     Queue();
