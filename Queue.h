@@ -16,7 +16,7 @@ private:
     {
         int data;
         Node* next;
-        Node(int value) : data(value), next(nullptr) {}
+        explicit Node(const int value) : data(value), next(nullptr) {}
     };
 
     Node* head;   
@@ -24,7 +24,7 @@ private:
     size_t count; 
 public:
     Queue();
-    explicit Queue(std::initializer_list<int> init);
+    explicit Queue(const std::initializer_list<int> init);
     Queue(const Queue& other);
     Queue(Queue&& other) noexcept;
 
@@ -35,7 +35,7 @@ public:
     Queue& operator=(Queue&& other) noexcept;
 
 
-    void enqueue(int value);   
+    void enqueue(const int value);   
     int dequeue();              
     int peek() const;        
 
@@ -46,9 +46,9 @@ public:
     std::string toString() const;
 
    
-    Queue& operator<<(int value);  
+    Queue& operator<<(const int value);  
     Queue& operator>>(int& value); 
 
     
-    bool contains(int value) const;
+    bool contains(const int value) const;
 };
