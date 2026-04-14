@@ -45,7 +45,7 @@ public:
 
    
     Queue& operator<<(const int value);  
-    Queue& operator>>(int& value); 
+    Queue& operator>>(int value); 
 
     
     bool contains(const int value) const;
