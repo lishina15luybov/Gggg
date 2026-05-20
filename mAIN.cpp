@@ -6,28 +6,6 @@
 using namespace VectorLib;
 
 /**
- * @brief Выводит ошибку и завершает программу
- * @param text текст ошибки
- */
-void error(const std::string& text) {
-    std::cerr << "Ошибка: " << text << std::endl;
-    exit(1);
-}
-
-/**
- * @brief Считывает целое число с клавиатуры
- * @return введенное число
- */
-int getChoice() {
-    int number = 0;
-    std::cin >> number;
-    if (std::cin.fail()) {
-        error("Неверный ввод числа");
-    }
-    return number;
-}
-
-/**
  * @brief Точка входа в программу
  * @return 0 при успешном выполнении
  */
@@ -91,4 +69,26 @@ int main() {
     std::cout << "Вы ввели вектор: " << v << std::endl;
 
     return 0;
+}
+
+/**
+ * @brief Выводит ошибку и завершает программу
+ * @param text текст ошибки
+ */
+void error(const std::string& text) {
+    std::cerr << "Ошибка: " << text << std::endl;
+    exit(1);
+}
+
+/**
+ * @brief Считывает целое число с клавиатуры
+ * @return введенное число
+ */
+int getChoice() {
+    int number = 0;
+    std::cin >> number;
+    if (std::cin.fail()) {
+        error("Неверный ввод числа");
+    }
+    return number;
 }
