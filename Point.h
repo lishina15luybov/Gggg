@@ -2,8 +2,6 @@
 
 #include <iostream>
 #include <string>
-#include <cmath>
-#include <sstream>
 
 namespace VectorLib {
 
@@ -21,38 +19,38 @@ public:
      * @brief Конструктор по умолчанию
      * @details Создает точку с координатами (0, 0)
      */
-    Point() : m_x(0.0), m_y(0.0) {}
+    Point();
 
     /**
      * @brief Конструктор с координатами
      * @param x абсцисса
      * @param y ордината
      */
-    Point(double x, double y) : m_x(x), m_y(y) {}
+    Point(double x, double y);
 
     /**
      * @brief Получить абсциссу
      * @return значение x
      */
-    double getX() const { return m_x; }
+    double getX() const;
 
     /**
      * @brief Получить ординату
      * @return значение y
      */
-    double getY() const { return m_y; }
+    double getY() const;
 
     /**
      * @brief Установить абсциссу
      * @param x новое значение x
      */
-    void setX(double x) { m_x = x; }
+    void setX(double x);
 
     /**
      * @brief Установить ординату
      * @param y новое значение y
      */
-    void setY(double y) { m_y = y; }
+    void setY(double y);
 
     /**
      * @brief Сериализация в строку
@@ -120,3 +118,4 @@ public:
 };
 
 } // namespace VectorLib
+
