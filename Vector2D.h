@@ -2,7 +2,6 @@
 
 #include "Point.h"
 #include <string>
-#include <cmath>
 #include <memory>
 #include <vector>
 
@@ -21,46 +20,43 @@ public:
     /**
      * @brief Конструктор по умолчанию
      */
-    Vector() : m_start(0, 0), m_end(0, 0) {}
+    Vector();
 
     /**
      * @brief Конструктор с двумя точками
      * @param start начальная точка
      * @param end конечная точка
      */
-    Vector(const Point& start, const Point& end) : m_start(start), m_end(end) {}
+    Vector(const Point& start, const Point& end);
 
     /**
      * @brief Виртуальный деструктор
      */
-    virtual ~Vector() = default;
+    virtual ~Vector();
 
     /**
      * @brief Получить начальную точку
      * @return начальная точка
      */
-    Point getStart() const { return m_start; }
+    Point getStart() const;
 
     /**
      * @brief Получить конечную точку
      * @return конечная точка
      */
-    Point getEnd() const { return m_end; }
+    Point getEnd() const;
 
     /**
      * @brief Получить координаты вектора
      * @return разность конечной и начальной точек
      */
-    Point getCoordinates() const { return m_end - m_start; }
+    Point getCoordinates() const;
 
     /**
      * @brief Вычисление евклидовой нормы (длины вектора)
      * @return длина вектора
      */
-    virtual double length() const {
-        Point coords = getCoordinates();
-        return std::sqrt(coords.getX() * coords.getX() + coords.getY() * coords.getY());
-    }
+    virtual double length() const;
 
     /**
      * @brief Статический метод нахождения угла между двумя векторами
@@ -101,14 +97,14 @@ public:
     /**
      * @brief Конструктор по умолчанию
      */
-    Vector2D() : Vector() {}
+    Vector2D();
 
     /**
      * @brief Конструктор через две точки
      * @param start начальная точка
      * @param end конечная точка
      */
-    Vector2D(const Point& start, const Point& end) : Vector(start, end) {}
+    Vector2D(const Point& start, const Point& end);
 
     /**
      * @brief Конструктор через пары чисел
@@ -117,8 +113,7 @@ public:
      * @param x2 абсцисса конца
      * @param y2 ордината конца
      */
-    Vector2D(double x1, double y1, double x2, double y2)
-        : Vector(Point(x1, y1), Point(x2, y2)) {}
+    Vector2D(const double x1, const double y1, const double x2, const double y2);
 
     /**
      * @brief Оператор сравнения "равно"
@@ -153,7 +148,7 @@ public:
      * @param scalar множитель
      * @return новый вектор, умноженный на скаляр
      */
-    Vector2D operator*(double scalar) const;
+    Vector2D operator*(const double scalar) const;
 
     /**
      * @brief Оператор сдвига влево
@@ -172,7 +167,7 @@ public:
 
     /**
      * @brief Статический метод сериализации в строку
-     * @param v вектоор
+     * @param v вектор
      * @return строковое представление
      */
     static std::string toString(const Vector2D& v);
