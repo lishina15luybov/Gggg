@@ -26,7 +26,7 @@ public:
      * @param x абсцисса
      * @param y ордината
      */
-    Point(double x, double y);
+    Point(const double x, const double y);
 
     /**
      * @brief Получить абсциссу
@@ -44,13 +44,13 @@ public:
      * @brief Установить абсциссу
      * @param x новое значение x
      */
-    void setX(double x);
+    void setX(const double x);
 
     /**
      * @brief Установить ординату
      * @param y новое значение y
      */
-    void setY(double y);
+    void setY(const double y);
 
     /**
      * @brief Сериализация в строку
@@ -77,14 +77,14 @@ public:
      * @param scalar число
      * @return новая точка с координатами (x + scalar, y + scalar)
      */
-    Point operator+(double scalar) const;
+    Point operator+(const double scalar) const;
 
     /**
      * @brief Оператор вычитания числа из точки
      * @param scalar число
      * @return новая точка с координатами (x - scalar, y - scalar)
      */
-    Point operator-(double scalar) const;
+    Point operator-(const double scalar) const;
 
     /**
      * @brief Оператор сложения двух точек
@@ -118,4 +118,3 @@ public:
 };
 
 } // namespace VectorLib
-
