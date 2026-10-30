@@ -67,12 +67,12 @@ namespace miit::algebra
         /**
          * @brief Доступ к элементу по индексам (const).
          */
-        const T& operator[](int index) const;
+        const std::vector<T>& operator[](const int index) const; 
 
         /**
          * @brief Доступ к строке по индексу (для изменения).
          */
-        std::vector<T>& operator[](int index);
+        std::vector<T>& operator[](const int index); 
 
         /**
          * @brief Сдвиг влево (циклический сдвиг строк).
@@ -85,12 +85,6 @@ namespace miit::algebra
         Matrix& operator>>(int shift);
 
         /**
-         * @brief Разыменование элемента по паре индексов.
-         */
-        T& operator()(int row, int col);
-        const T& operator()(int row, int col) const;
-
-        /**
          * @brief Преобразование в строку.
          */
         std::string toString() const;
@@ -98,16 +92,16 @@ namespace miit::algebra
         /**
          * @brief Удалить столбец по индексу.
          */
-        void removeColumn(int colIndex);
+        void removeColumn(const int colIndex); 
 
         /**
          * @brief Удалить строку по индексу.
          */
-        void removeRow(int rowIndex);
+        void removeRow(const int rowIndex); 
 
         /**
          * @brief Изменить размеры (сохраняя данные).
          */
-        void resize(int newRows, int newCols);
+        void resize(const int newRows, const int newCols); 
     };
 }
