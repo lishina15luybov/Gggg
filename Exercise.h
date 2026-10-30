@@ -17,7 +17,7 @@ namespace miit::algebra
         /**
          * @brief Конструктор с размерами и генератором.
          */
-        Exercise(int rows, int cols, Generator& generator);
+        Exercise(const int rows, const int cols, const Generator& generator);
 
         /**
          * @brief Конструктор с готовой матрицей.
