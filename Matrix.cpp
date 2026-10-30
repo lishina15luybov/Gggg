@@ -65,28 +65,17 @@ namespace miit::algebra
     template <typename T>
     int Matrix<T>::getCols() const { return cols; }
 
+
     template <typename T>
-    const std::vector<T>& Matrix<T>::operator[](int index) const
+    const std::vector<T>& Matrix<T>::operator[](const int index) const
     {
         return data.at(index);
     }
 
     template <typename T>
-    std::vector<T>& Matrix<T>::operator[](int index)
+    std::vector<T>& Matrix<T>::operator[](const int index)
     {
         return data.at(index);
-    }
-
-    template <typename T>
-    T& Matrix<T>::operator()(int row, int col)
-    {
-        return data.at(row).at(col);
-    }
-
-    template <typename T>
-    const T& Matrix<T>::operator()(int row, int col) const
-    {
-        return data.at(row).at(col);
     }
 
     template <typename T>
@@ -134,7 +123,7 @@ namespace miit::algebra
     }
 
     template <typename T>
-    void Matrix<T>::removeColumn(int colIndex)
+    void Matrix<T>::removeColumn(const int colIndex)
     {
         if (colIndex < 0 || colIndex >= cols) return;
         for (auto& row : data)
@@ -145,7 +134,7 @@ namespace miit::algebra
     }
 
     template <typename T>
-    void Matrix<T>::removeRow(int rowIndex)
+    void Matrix<T>::removeRow(const int rowIndex)
     {
         if (rowIndex < 0 || rowIndex >= rows) return;
         data.erase(data.begin() + rowIndex);
@@ -153,7 +142,7 @@ namespace miit::algebra
     }
 
     template <typename T>
-    void Matrix<T>::resize(int newRows, int newCols)
+    void Matrix<T>::resize(const int newRows, const int newCols)
     {
         std::vector<std::vector<T>> newData(newRows, std::vector<T>(newCols, T{}));
         int r = std::min(rows, newRows);
@@ -166,7 +155,7 @@ namespace miit::algebra
         cols = newCols;
     }
 
-    
+
     template class Matrix<int>;
     template class Matrix<double>;
 }
