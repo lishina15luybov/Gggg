@@ -10,7 +10,7 @@ namespace miit::algebra
     class Task2 : public Exercise
     {
     public:
-        Task2(int rows, int cols, Generator& generator);
+        Task2(const int rows, const int cols, const Generator& generator);
         explicit Task2(const Matrix<int>& matrix);
 
         void solve() override;
