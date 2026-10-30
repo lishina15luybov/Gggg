@@ -11,6 +11,6 @@ std::string Tablet::getType() const { return "Таблетки"; }
 
 std::string Tablet::getInfo() const {
     std::ostringstream oss;
-    oss << Medicine::getInfo() << " | Таблеток в упаковке: " << pillsPerPack;
+    oss << Medicine::getInfo() << " | Таблеток: " << pillsPerPack;
     return oss.str();
 }
