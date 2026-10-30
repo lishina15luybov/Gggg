@@ -1,9 +1,7 @@
 #pragma once
 #include <string>
-#include <vector>
 #include <map>
 
-// Базовый класс
 class Medicine {
 protected:
     std::string name;
@@ -13,8 +11,7 @@ protected:
     std::string disease;
     int shelfLifeMonths;
     double price;
-    // продажи: дата (день от начала года) - количество
-    std::map<int, int> sales; // ключ: 1..365, значение: штук продано
+    std::map<int, int> sales; // день года -количество
 
 public:
     Medicine(const std::string& name, const std::string& form,
@@ -27,9 +24,9 @@ public:
     double getPrice() const;
 
     void addSale(int dayOfYear, int qty);
-    // период: 1=неделя, 2=месяц, 3=год
-    int getSalesForPeriod(int period) const;
+    
+    int getSalesForPeriod(const int period) const; 
 
-    virtual std::string getInfo() const;      
-    virtual std::string getType() const = 0;  
+    virtual std::string getInfo() const;
+    virtual std::string getType() const = 0;
 };
