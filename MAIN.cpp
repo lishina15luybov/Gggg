@@ -10,14 +10,25 @@
 
 using namespace miit::algebra;
 
+const int CHOICE_RANDOM = 1;
+const int CHOICE_KEYBOARD = 2;
+const int CHOICE_ZERO = 3;
+const int CHOICE_CONST = 4;
 
+
+const int DEFAULT_MIN_VAL = -10;
+const int DEFAULT_MAX_VAL = 10;
+
+/**
+ * @brief Выбор генератора пользователем.
+ */
 std::unique_ptr<Generator> chooseGenerator()
 {
     std::cout << "Выберите способ заполнения матрицы:\n"
-              << "  1 - случайными числами\n"
-              << "  2 - с клавиатуры\n"
-              << "  3 - нулями\n"
-              << "  4 - константным значением\n"
+              << "  " << CHOICE_RANDOM << " - случайными числами\n"
+              << "  " << CHOICE_KEYBOARD << " - с клавиатуры\n"
+              << "  " << CHOICE_ZERO << " - нулями\n"
+              << "  " << CHOICE_CONST << " - константным значением\n"
               << "Ваш выбор: ";
 
     int choice = 0;
@@ -25,18 +36,19 @@ std::unique_ptr<Generator> chooseGenerator()
 
     switch (choice)
     {
-    case 1:
+    case CHOICE_RANDOM: 
     {
-        int minV = -10, maxV = 10;
+        int minV = DEFAULT_MIN_VAL;
+        int maxV = DEFAULT_MAX_VAL;
         std::cout << "Введите min и max для случайных чисел: ";
         std::cin >> minV >> maxV;
         return std::make_unique<RandomGenerator>(minV, maxV);
     }
-    case 2:
+    case CHOICE_KEYBOARD: 
         return std::make_unique<IStreamGenerator>(std::cin);
-    case 3:
+    case CHOICE_ZERO: 
         return std::make_unique<ZeroGenerator>();
-    case 4:
+    case CHOICE_CONST: 
     {
         int v = 0;
         std::cout << "Введите константу: ";
@@ -76,7 +88,7 @@ int main()
         for (int j = 0; j < cols; ++j)
         {
             std::cout << "Элемент [" << i << "][" << j << "]: ";
-            std::cin >> m2(i, j);
+            std::cin >> m2[i][j]; 
         }
 
     Task2 task2(m2);
