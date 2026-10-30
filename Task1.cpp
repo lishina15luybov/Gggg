@@ -3,7 +3,7 @@
 
 namespace miit::algebra
 {
-    Task1::Task1(int rows, int cols, Generator& generator)
+    Task1::Task1(const int rows, const int cols, const Generator& generator)
         : Exercise(rows, cols, generator) {}
 
     Task1::Task1(const Matrix<int>& matrix) : Exercise(matrix) {}
@@ -17,17 +17,17 @@ namespace miit::algebra
         for (int j = 0; j < cols; ++j)
         {
             int minRow = 0;
-            int minAbs = std::abs(matrix(0, j));
+            int minAbs = std::abs(matrix[0][j]); 
             for (int i = 1; i < rows; ++i)
             {
-                int curAbs = std::abs(matrix(i, j));
+                int curAbs = std::abs(matrix[i][j]); 
                 if (curAbs < minAbs)
                 {
                     minAbs = curAbs;
                     minRow = i;
                 }
             }
-            matrix(minRow, j) = 0;
+            matrix[minRow][j] = 0;
         }
     }
 }
