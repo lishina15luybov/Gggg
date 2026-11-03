@@ -16,14 +16,21 @@ namespace miit::algebra
     public:
         /**
          * @brief Конструктор с размерами и генератором.
+         * @param rows Количество строк.
+         * @param cols Количество столбцов.
+         * @param generator Генератор значений.
          */
         Exercise(const int rows, const int cols, const Generator& generator);
 
         /**
          * @brief Конструктор с готовой матрицей.
+         * @param matrix Готовая матрица.
          */
         explicit Exercise(const Matrix<int>& matrix);
 
+        /**
+         * @brief Виртуальный деструктор.
+         */
         virtual ~Exercise() = default;
 
         /**
@@ -33,11 +40,13 @@ namespace miit::algebra
 
         /**
          * @brief Получить матрицу.
+         * @return Константная ссылка на матрицу.
          */
         const Matrix<int>& getMatrix() const;
 
         /**
-         * @brief Строковое представление.
+         * @brief Строковое представление матрицы.
+         * @return Строка с матрицей.
          */
         std::string toString() const;
     };
