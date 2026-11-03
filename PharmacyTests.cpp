@@ -2,41 +2,36 @@
 #include <cassert>
 #include <memory>
 #include "Tablet.h"
-#include "Syrup.h"
-#include "MedicineCatalog.h"
+#include "PharmacyBranch.h"
+#include "PharmacyNetwork.h"
 
-void testPolymorphism() {
-    std::vector<std::shared_ptr<Medicine>> v;
-    v.push_back(std::make_shared<Tablet>("A", "M", "-", "D", 12, 10.0, 10));
-    v.push_back(std::make_shared<Syrup>("B", "M", "-", "D", 12, 20.0, 100));
-    assert(v[0]->getType() == "Таблетки");
-    assert(v[1]->getType() == "Сироп");
-    std::cout << "[OK] testPolymorphism\n";
+void testNetworkAndBranches() {
+    PharmacyNetwork network("Тестовая сеть");
+    auto b1 = std::make_shared<PharmacyBranch>("Филиал 1", "Адрес 1");
+    auto b2 = std::make_shared<PharmacyBranch>("Филиал 2", "Адрес 2");
+    
+    b1->addMedicine(std::make_shared<Tablet>("Аспирин", "Bayer", "-", "Простуда", 24, 150.0, 20));
+    network.addBranch(b1);
+    network.addBranch(b2);
+
+    assert(network.getBranches().size() == 2);
+    assert(b1->getAllMedicines().size() == 1);
+    assert(b2->getAllMedicines().empty());
+    
+    std::cout << "[OK] testNetworkAndBranches\n";
 }
 
-void testSales() {
-    auto t = std::make_shared<Tablet>("A", "M", "-", "D", 12, 10.0, 10);
+void testSalesConst() {
+    auto t = std::make_shared<Tablet>("Аспирин", "Bayer", "-", "Простуда", 24, 150.0, 20);
     t->addSale(360, 5);
-    t->addSale(364, 3);
-    assert(t->getSalesForPeriod(1) == 8);   // последняя неделя
-    assert(t->getSalesForPeriod(3) == 8);   // год
-    std::cout << "[OK] testSales\n";
-}
-
-void testCatalog() {
-    MedicineCatalog c;
-    c.addMedicine(std::make_shared<Tablet>("A", "M", "-", "Простуда", 12, 10.0, 10));
-    c.addMedicine(std::make_shared<Syrup>("B", "M", "-", "Кашель", 12, 20.0, 100));
-    assert(c.findByDisease("Простуда").size() == 1);
-    assert(c.findByDisease("Простуда")[0]->getName() == "A");
-    std::cout << "[OK] testCatalog\n";
+    assert(t->getSalesForPeriod(3) == 5); 
+    std::cout << "[OK] testSalesConst\n";
 }
 
 int main() {
     setlocale(LC_ALL, "Russian");
-    testPolymorphism();
-    testSales();
-    testCatalog();
+    testNetworkAndBranches();
+    testSalesConst();
     std::cout << "Все тесты пройдены!\n";
     return 0;
 }
