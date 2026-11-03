@@ -13,7 +13,16 @@ namespace miit::algebra
         std::istream& in;
 
     public:
+        /**
+         * @brief Конструктор с потоком ввода.
+         * @param in Поток ввода.
+         */
         IStreamGenerator(std::istream& in);
+
+        /**
+         * @brief Сгенерировать значение из потока.
+         * @return Считанное значение.
+         */
         int generate() override;
     };
 }
