@@ -9,6 +9,10 @@ namespace miit::algebra
     class ZeroGenerator : public Generator
     {
     public:
+        /**
+         * @brief Сгенерировать значение.
+         * @return Всегда возвращает 0.
+         */
         int generate() override;
     };
 }
