@@ -17,91 +17,35 @@ namespace miit::algebra
         int cols;
 
     public:
-        /**
-         * @brief Конструктор по умолчанию.
-         */
         Matrix();
-
-        /**
-         * @brief Конструктор с размерами, заполняет нулями.
-         * @param rows Количество строк.
-         * @param cols Количество столбцов.
-         */
-        Matrix(int rows, int cols);
-
-        /**
-         * @brief Конструктор копирования.
-         */
+        Matrix(const int rows, const int cols);
         Matrix(const Matrix& other);
-
-        /**
-         * @brief Конструктор перемещения.
-         */
         Matrix(Matrix&& other) noexcept;
-
-        /**
-         * @brief Деструктор.
-         */
         ~Matrix();
 
-        /**
-         * @brief Оператор присваивания копированием.
-         */
         Matrix& operator=(const Matrix& other);
-
-        /**
-         * @brief Оператор присваивания перемещением.
-         */
         Matrix& operator=(Matrix&& other) noexcept;
 
-        /**
-         * @brief Получить количество строк.
-         */
         int getRows() const;
-
-        /**
-         * @brief Получить количество столбцов.
-         */
         int getCols() const;
 
-        /**
-         * @brief Доступ к элементу по индексам (const).
-         */
-        const std::vector<T>& operator[](const int index) const; 
-
-        /**
-         * @brief Доступ к строке по индексу (для изменения).
-         */
-        std::vector<T>& operator[](const int index); 
+        const std::vector<T>& operator[](const int index) const;
+        std::vector<T>& operator[](const int index);
 
         /**
          * @brief Сдвиг влево (циклический сдвиг строк).
          */
-        Matrix& operator<<(int shift);
+        Matrix& operator<<(const int shift);
 
         /**
          * @brief Сдвиг вправо (циклический сдвиг строк).
          */
-        Matrix& operator>>(int shift);
+        Matrix& operator>>(const int shift); // ИСПРАВЛЕНО: добавлен const
 
-        /**
-         * @brief Преобразование в строку.
-         */
         std::string toString() const;
 
-        /**
-         * @brief Удалить столбец по индексу.
-         */
-        void removeColumn(const int colIndex); 
-
-        /**
-         * @brief Удалить строку по индексу.
-         */
-        void removeRow(const int rowIndex); 
-
-        /**
-         * @brief Изменить размеры (сохраняя данные).
-         */
-        void resize(const int newRows, const int newCols); 
+        void removeColumn(const int colIndex);
+        void removeRow(const int rowIndex);
+        void resize(const int newRows, const int newCols);
     };
 }
