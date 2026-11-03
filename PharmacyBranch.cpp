@@ -3,28 +3,34 @@
 PharmacyBranch::PharmacyBranch(const std::string& name, const std::string& address) 
     : name(name), address(address) {}
 
+PharmacyBranch::~PharmacyBranch() {
+    for (auto med : medicines) {
+        delete med;
+    }
+}
+
 std::string PharmacyBranch::getName() const { return name; }
 std::string PharmacyBranch::getAddress() const { return address; }
 
-void PharmacyBranch::addMedicine(std::shared_ptr<Medicine> med) {
+void PharmacyBranch::addMedicine(Medicine* med) {
     medicines.push_back(med);
 }
 
-std::vector<std::shared_ptr<Medicine>> PharmacyBranch::getAllMedicines() const {
+std::vector<Medicine*> PharmacyBranch::getAllMedicines() const {
     return medicines;
 }
 
-std::vector<std::shared_ptr<Medicine>> PharmacyBranch::findByDisease(const std::string& disease) const {
-    std::vector<std::shared_ptr<Medicine>> result;
-    for (const auto& m : medicines) {
+std::vector<Medicine*> PharmacyBranch::findByDisease(const std::string& disease) const {
+    std::vector<Medicine*> result;
+    for (auto m : medicines) {
         if (m->getDisease() == disease) result.push_back(m);
     }
     return result;
 }
 
-std::vector<std::shared_ptr<Medicine>> PharmacyBranch::findByName(const std::string& name) const {
-    std::vector<std::shared_ptr<Medicine>> result;
-    for (const auto& m : medicines) {
+std::vector<Medicine*> PharmacyBranch::findByName(const std::string& name) const {
+    std::vector<Medicine*> result;
+    for (auto m : medicines) {
         if (m->getName() == name) result.push_back(m);
     }
     return result;
