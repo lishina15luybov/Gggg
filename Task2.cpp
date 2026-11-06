@@ -2,22 +2,23 @@
 
 namespace miit::algebra
 {
-    Task2::Task2(const int rows, const int cols, const Generator& generator)
+    Task2::Task2(const std::size_t rows, const std::size_t cols, const Generator& generator)
         : Exercise(rows, cols, generator) {}
 
     Task2::Task2(const Matrix<int>& matrix) : Exercise(matrix) {}
 
     void Task2::solve()
     {
-        int rows = matrix.getRows();
-        int cols = matrix.getCols();
+        std::size_t rows = matrix.getRows();
+        std::size_t cols = matrix.getCols();
         if (rows == 0 || cols == 0) return;
 
-        for (int j = cols - 1; j >= 0; --j)
+        for (std::size_t j = cols; j > 0; --j)
         {
-            if (matrix[0][j] > matrix[rows - 1][j]) 
+            std::size_t index = j - 1;
+            if (matrix[0][index] > matrix[rows - 1][index])
             {
-                matrix.removeColumn(j);
+                matrix.removeColumn(index);
             }
         }
     }
