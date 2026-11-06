@@ -1,7 +1,7 @@
 #pragma once
 #include "Matrix.h"
 #include "Generator.h"
-#include <memory>
+#include <cstddef>
 
 namespace miit::algebra
 {
@@ -20,7 +20,7 @@ namespace miit::algebra
          * @param cols Количество столбцов.
          * @param generator Генератор значений.
          */
-        Exercise(const int rows, const int cols, const Generator& generator);
+        Exercise(const std::size_t rows, const std::size_t cols, const Generator& generator);
 
         /**
          * @brief Конструктор с готовой матрицей.
