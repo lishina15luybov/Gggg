@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <cstddef>
 #include "Task1.h"
 #include "Task2.h"
 #include "RandomGenerator.h"
@@ -33,7 +34,8 @@ public:
 
         std::cout << "===== Задание 4.3, вариант 2 =====\n";
 
-        int rows = 0, cols = 0;
+        std::size_t rows = 0;
+        std::size_t cols = 0;
         std::cout << "Введите количество строк и столбцов: ";
         std::cin >> rows >> cols;
 
@@ -102,9 +104,9 @@ public:
                      "больше последнего ---\n";
 
         Matrix<int> m2(rows, cols);
-        for (int i = 0; i < rows; ++i)
+        for (std::size_t i = 0; i < rows; ++i)
         {
-            for (int j = 0; j < cols; ++j)
+            for (std::size_t j = 0; j < cols; ++j)
             {
                 std::cout << "Элемент [" << i << "][" << j << "]: ";
                 std::cin >> m2[i][j]; 
