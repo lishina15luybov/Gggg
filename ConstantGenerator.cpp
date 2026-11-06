@@ -2,7 +2,7 @@
 
 namespace miit::algebra
 {
-    ConstantGenerator::ConstantGenerator(int value) : value{value} {}
+    ConstantGenerator::ConstantGenerator(const int value) : value{value} {}
 
     int ConstantGenerator::generate() { return value; }
 }
