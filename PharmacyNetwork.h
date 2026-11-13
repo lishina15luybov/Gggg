@@ -8,8 +8,8 @@
  */
 class PharmacyNetwork {
 private:
-    std::string networkName; /// Название сети
-    std::vector<PharmacyBranch*> branches; /// Список филиалов в сети
+    std::string networkName; ///< Название сети
+    std::vector<PharmacyBranch> branches; ///< Список филиалов в сети (хранятся по значению)
 
 public:
     /**
@@ -18,18 +18,24 @@ public:
      */
     PharmacyNetwork(const std::string& networkName);
     
+    /// @brief Деструктор по умолчанию.
+    ~PharmacyNetwork() = default;
 
-    ~PharmacyNetwork();
-
-    /// @return Название сети
+    /**
+     * @brief Получить название сети.
+     * @return Название
+     */
     std::string getNetworkName() const;
     
     /**
      * @brief Добавить филиал в сеть.
-     * @param branch Указатель на филиал
+     * @param branch Филиал
      */
-    void addBranch(PharmacyBranch* branch);
+    void addBranch(const PharmacyBranch& branch);
     
-    /// @return Вектор всех филиалов сети
-    std::vector<PharmacyBranch*> getBranches() const;
+    /**
+     * @brief Получить список всех филиалов.
+     * @return Вектор филиалов
+     */
+    std::vector<PharmacyBranch> getBranches() const;
 };
