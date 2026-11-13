@@ -12,8 +12,19 @@ namespace miit::algebra
     class Matrix
     {
     private:
+        /**
+         * @brief Двумерный массив (вектор векторов) для хранения данных.
+         */
         std::vector<std::vector<T>> data;
+
+        /**
+         * @brief Количество строк в матрице.
+         */
         std::size_t rows;
+
+        /**
+         * @brief Количество столбцов в матрице.
+         */
         std::size_t cols;
 
     public:
@@ -73,7 +84,7 @@ namespace miit::algebra
         std::size_t getCols() const;
 
         /**
-         * @brief Доступ к элементу по индексам .
+         * @brief Доступ к элементу по индексам (const).
          * @param index Индекс строки.
          * @return Константная ссылка на строку.
          */
