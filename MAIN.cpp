@@ -24,26 +24,20 @@ private:
     static const int DEFAULT_MIN_VAL = -10;
     static const int DEFAULT_MAX_VAL = 10;
 
-    /**
-     * @brief Вспомогательный метод для выполнения первой задачи.
-     * @param rows Количество строк.
-     * @param cols Количество столбцов.
-     * @param gen Ссылка на выбранный генератор.
-     */
-    void runTask1(const std::size_t rows, const std::size_t cols, const Generator& gen)
+    void runTask1(const std::size_t rows, const std::size_t cols, Generator& gen)
     {
         std::cout << "\n--- Задача 1: заменить минимальный по модулю "
                      "элемент каждого столбца нулем ---\n";
         Task1 task1(rows, cols, gen);
         std::cout << "Исходная матрица:\n" << task1.toString();
-        task1.solve();
+        
+        Exercise* exercise = &task1; 
+        exercise->solve();
+        
         std::cout << "Результат:\n" << task1.toString();
     }
 
 public:
-    /**
-     * @brief Точка входа в логику приложения.
-     */
     void run()
     {
         setlocale(LC_ALL, "Russian");
@@ -64,6 +58,7 @@ public:
 
         int choice = 0;
         std::cin >> choice;
+
         switch (choice)
         {
         case CHOICE_RANDOM:
@@ -108,7 +103,9 @@ public:
         std::cout << "\n--- Задача 2: удалить столбцы, где первый элемент "
                      "больше последнего ---\n";
 
-        Matrix<int> m2(rows, cols);
+        Matrix<int> m2;
+        m2.fill(rows, cols, 0);
+
         for (std::size_t i = 0; i < rows; ++i)
         {
             for (std::size_t j = 0; j < cols; ++j)
@@ -120,7 +117,10 @@ public:
 
         Task2 task2(m2);
         std::cout << "Исходная матрица:\n" << task2.toString();
-        task2.solve();
+        
+        Exercise* exercise2 = &task2;
+        exercise2->solve();
+        
         std::cout << "Результат:\n" << task2.toString();
 
         std::cout << "\nТест операторов сдвига:\n";
