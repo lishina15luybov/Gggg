@@ -7,14 +7,14 @@
  */
 class Medicine {
 protected:
-    std::string name;          /// Название лекарства
-    std::string form;          /// Форма выпуска (таблетки, сироп и т.д.)
-    std::string manufacturer;  /// Производитель
-    std::string annotation;    /// Краткая аннотация
-    std::string disease;       /// Болезнь, от которой применяется
-    int shelfLifeMonths;       /// Срок годности в месяцах
-    double price;              /// Цена в рублях
-    std::map<int, int> sales;  /// Статистика продаж: ключ - день года (1-365), значение - количество
+    std::string name;          ///< Название лекарства
+    std::string form;          ///< Форма выпуска (таблетки, сироп и т.д.)
+    std::string manufacturer;  ///< Производитель
+    std::string annotation;    ///< Краткая аннотация
+    std::string disease;       ///< Болезнь, от которой применяется
+    int shelfLifeMonths;       ///< Срок годности в месяцах
+    double price;              ///< Цена в рублях
+    std::map<int, int> sales;  ///< Статистика продаж: ключ - день года (1-365), значение - количество
 
 public:
     /**
@@ -29,25 +29,35 @@ public:
      */
     Medicine(const std::string& name, const std::string& form,
              const std::string& manufacturer, const std::string& annotation,
-             const std::string& disease, int shelfLifeMonths, double price);
+             const std::string& disease, const int shelfLifeMonths, const double price);
              
+    /// @brief Виртуальный деструктор.
     virtual ~Medicine() = default;
 
-    /// @return Название лекарства
+    /**
+     * @brief Получить название лекарства.
+     * @return Название
+     */
     std::string getName() const;
     
-    /// @return Болезнь, от которой помогает лекарство
+    /**
+     * @brief Получить болезнь, от которой помогает лекарство.
+     * @return Название болезни
+     */
     std::string getDisease() const;
     
-    /// @return Цена лекарства
+    /**
+     * @brief Получить цену лекарства.
+     * @return Цена в рублях
+     */
     double getPrice() const;
 
     /**
      * @brief Добавить информацию о продажах.
-     * @param dayOfYear День года 
+     * @param dayOfYear День года (от 1 до 365)
      * @param qty Количество проданных упаковок
      */
-    void addSale(int dayOfYear, int qty);
+    void addSale(const int dayOfYear, const int qty);
     
     /**
      * @brief Получить количество продаж за определенный период.
@@ -56,9 +66,15 @@ public:
      */
     int getSalesForPeriod(const int period) const; 
 
-    /// @brief Получить строковое представление информации о лекарстве 
+    /**
+     * @brief Получить строковое представление информации о лекарстве.
+     * @return Строка с информацией
+     */
     virtual std::string getInfo() const;
     
-    /// @brief Получить тип лекарства
+    /**
+     * @brief Получить тип лекарства.
+     * @return Строка с названием типа
+     */
     virtual std::string getType() const = 0;
 };
