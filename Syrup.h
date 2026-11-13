@@ -5,18 +5,31 @@
  * @brief Класс-наследник, описывающий сироп.
  */
 class Syrup : public Medicine {
-    int volumeMl; /// Объем во флаконе (в мл)
+    int volumeMl; ///< Объем во флаконе (в мл)
 public:
     /**
      * @brief Конструктор сиропа.
+     * @param name Название
+     * @param manufacturer Изготовитель
+     * @param annotation Аннотация
+     * @param disease Болезнь
+     * @param shelfLifeMonths Срок годности
+     * @param price Цена
+     * @param volumeMl Объем во флаконе (в мл)
      */
     Syrup(const std::string& name, const std::string& manufacturer,
           const std::string& annotation, const std::string& disease,
-          int shelfLifeMonths, double price, int volumeMl);
+          const int shelfLifeMonths, const double price, const int volumeMl);
           
-    /// @return Тип "Сироп"
+    /**
+     * @brief Получить тип лекарства.
+     * @return Строка "Сироп"
+     */
     std::string getType() const override;
     
-    /// @return Полная информация о сиропе
+    /**
+     * @brief Получить полную информацию о сиропе.
+     * @return Строка с информацией
+     */
     std::string getInfo() const override;
 };
