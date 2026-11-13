@@ -24,6 +24,22 @@ private:
     static const int DEFAULT_MIN_VAL = -10;
     static const int DEFAULT_MAX_VAL = 10;
 
+    /**
+     * @brief Вспомогательный метод для выполнения первой задачи.
+     * @param rows Количество строк.
+     * @param cols Количество столбцов.
+     * @param gen Ссылка на выбранный генератор.
+     */
+    void runTask1(const std::size_t rows, const std::size_t cols, const Generator& gen)
+    {
+        std::cout << "\n--- Задача 1: заменить минимальный по модулю "
+                     "элемент каждого столбца нулем ---\n";
+        Task1 task1(rows, cols, gen);
+        std::cout << "Исходная матрица:\n" << task1.toString();
+        task1.solve();
+        std::cout << "Результат:\n" << task1.toString();
+    }
+
 public:
     /**
      * @brief Точка входа в логику приложения.
@@ -48,56 +64,45 @@ public:
 
         int choice = 0;
         std::cin >> choice;
-
-        std::cout << "\n--- Задача 1: заменить минимальный по модулю "
-                     "элемент каждого столбца нулем ---\n";
-
-        if (choice == CHOICE_RANDOM)
+        switch (choice)
+        {
+        case CHOICE_RANDOM:
         {
             int minV = DEFAULT_MIN_VAL, maxV = DEFAULT_MAX_VAL;
             std::cout << "Введите min и max для случайных чисел: ";
             std::cin >> minV >> maxV;
             RandomGenerator gen(minV, maxV);
-            Task1 task1(rows, cols, gen);
-            std::cout << "Исходная матрица:\n" << task1.toString();
-            task1.solve();
-            std::cout << "Результат:\n" << task1.toString();
+            runTask1(rows, cols, gen);
+            break;
         }
-        else if (choice == CHOICE_KEYBOARD)
+        case CHOICE_KEYBOARD:
         {
             IStreamGenerator gen(std::cin);
-            Task1 task1(rows, cols, gen);
-            std::cout << "Исходная матрица:\n" << task1.toString();
-            task1.solve();
-            std::cout << "Результат:\n" << task1.toString();
+            runTask1(rows, cols, gen);
+            break;
         }
-        else if (choice == CHOICE_ZERO)
+        case CHOICE_ZERO:
         {
             ZeroGenerator gen;
-            Task1 task1(rows, cols, gen);
-            std::cout << "Исходная матрица:\n" << task1.toString();
-            task1.solve();
-            std::cout << "Результат:\n" << task1.toString();
+            runTask1(rows, cols, gen);
+            break;
         }
-        else if (choice == CHOICE_CONST)
+        case CHOICE_CONST:
         {
             int v = 0;
             std::cout << "Введите константу: ";
             std::cin >> v;
             ConstantGenerator gen(v);
-            Task1 task1(rows, cols, gen);
-            std::cout << "Исходная матрица:\n" << task1.toString();
-            task1.solve();
-            std::cout << "Результат:\n" << task1.toString();
+            runTask1(rows, cols, gen);
+            break;
         }
-        else
+        default:
         {
             std::cout << "Неверный выбор, используется генератор нулей.\n";
             ZeroGenerator gen;
-            Task1 task1(rows, cols, gen);
-            std::cout << "Исходная матрица:\n" << task1.toString();
-            task1.solve();
-            std::cout << "Результат:\n" << task1.toString();
+            runTask1(rows, cols, gen);
+            break;
+        }
         }
 
         std::cout << "\n--- Задача 2: удалить столбцы, где первый элемент "
