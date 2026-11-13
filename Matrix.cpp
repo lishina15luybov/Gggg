@@ -1,6 +1,5 @@
 #include "Matrix.h"
 #include <sstream>
-#include <stdexcept>
 #include <algorithm>
 
 namespace miit::algebra
@@ -9,9 +8,9 @@ namespace miit::algebra
     Matrix<T>::Matrix() : rows{0}, cols{0} {}
 
     template <typename T>
-    Matrix<T>::Matrix(const std::size_t rows, const std::size_t cols) : rows{rows}, cols{cols}
+    Matrix<T>::Matrix(const std::size_t rows, const std::size_t cols)
     {
-        data.assign(rows, std::vector<T>(cols, T{}));
+        fill(rows, cols, T{});
     }
 
     template <typename T>
@@ -58,6 +57,22 @@ namespace miit::algebra
 
     template <typename T>
     std::size_t Matrix<T>::getCols() const { return cols; }
+
+    template <typename T>
+    void Matrix<T>::fill(const T& value)
+    {
+        for (auto& row : data)
+        {
+            std::fill(row.begin(), row.end(), value);
+        }
+    }
+    template <typename T>
+    void Matrix<T>::fill(const std::size_t newRows, const std::size_t newCols, const T& value)
+    {
+        rows = newRows;
+        cols = newCols;
+        data.assign(rows, std::vector<T>(cols, value));
+    }
 
     template <typename T>
     const std::vector<T>& Matrix<T>::operator[](const std::size_t index) const { return data.at(index); }
