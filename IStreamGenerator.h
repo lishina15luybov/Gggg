@@ -10,6 +10,9 @@ namespace miit::algebra
     class IStreamGenerator : public Generator
     {
     private:
+        /**
+         * @brief Ссылка на поток ввода.
+         */
         std::istream& in;
 
     public:
