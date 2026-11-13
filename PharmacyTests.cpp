@@ -9,17 +9,18 @@
  */
 void testNetworkAndBranches() {
     PharmacyNetwork network("Тестовая сеть");
-    PharmacyBranch* b1 = new PharmacyBranch("Филиал 1", "Адрес 1");
-    PharmacyBranch* b2 = new PharmacyBranch("Филиал 2", "Адрес 2");
+    PharmacyBranch b1("Филиал 1", "Адрес 1");
+    PharmacyBranch b2("Филиал 2", "Адрес 2");
     
-    b1->addMedicine(new Tablet("Аспирин", "Bayer", "-", "Простуда", 24, 150.0, 20));
+    Tablet testTablet("Аспирин", "Bayer", "-", "Простуда", 24, 150.0, 20);
+    b1.addMedicine(testTablet);
     
     network.addBranch(b1);
     network.addBranch(b2);
 
     assert(network.getBranches().size() == 2);
-    assert(b1->getAllMedicines().size() == 1);
-    assert(b2->getAllMedicines().empty());
+    assert(b1.getAllMedicines().size() == 1);
+    assert(b2.getAllMedicines().empty());
     
     std::cout << "[OK] testNetworkAndBranches\n";
 }
@@ -28,15 +29,15 @@ void testNetworkAndBranches() {
  * @brief Тест расчета продаж за период.
  */
 void testSalesConst() {
-    Tablet* t = new Tablet("Аспирин", "Bayer", "-", "Простуда", 24, 150.0, 20);
-    t->addSale(360, 5);
-    assert(t->getSalesForPeriod(3) == 5); 
-    delete t;
+    Tablet t("Аспирин", "Bayer", "-", "Простуда", 24, 150.0, 20);
+    t.addSale(360, 5);
+    assert(t.getSalesForPeriod(3) == 5); 
     std::cout << "[OK] testSalesConst\n";
 }
 
 /**
  * @brief Главная функция тестов.
+ * @return Код возврата (0 - успех)
  */
 int main() {
     setlocale(LC_ALL, "Russian");
