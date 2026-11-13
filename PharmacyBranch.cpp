@@ -1,37 +1,53 @@
 #include "PharmacyBranch.h"
 
+/**
+ * @brief Конструктор филиала.
+ */
 PharmacyBranch::PharmacyBranch(const std::string& name, const std::string& address) 
     : name(name), address(address) {}
 
-PharmacyBranch::~PharmacyBranch() {
-    for (auto med : medicines) {
-        delete med;
-    }
-}
-
+/**
+ * @brief Получить название филиала.
+ */
 std::string PharmacyBranch::getName() const { return name; }
+
+/**
+ * @brief Получить адрес филиала.
+ */
 std::string PharmacyBranch::getAddress() const { return address; }
 
-void PharmacyBranch::addMedicine(Medicine* med) {
+/**
+ * @brief Добавить лекарство в ассортимент.
+ */
+void PharmacyBranch::addMedicine(Medicine& med) {
     medicines.push_back(med);
 }
 
-std::vector<Medicine*> PharmacyBranch::getAllMedicines() const {
+/**
+ * @brief Получить все лекарства в филиале.
+ */
+std::vector<std::reference_wrapper<Medicine>> PharmacyBranch::getAllMedicines() const {
     return medicines;
 }
 
-std::vector<Medicine*> PharmacyBranch::findByDisease(const std::string& disease) const {
-    std::vector<Medicine*> result;
+/**
+ * @brief Найти лекарства от конкретной болезни.
+ */
+std::vector<std::reference_wrapper<Medicine>> PharmacyBranch::findByDisease(const std::string& disease) const {
+    std::vector<std::reference_wrapper<Medicine>> result;
     for (auto m : medicines) {
-        if (m->getDisease() == disease) result.push_back(m);
+        if (m.get().getDisease() == disease) result.push_back(m);
     }
     return result;
 }
 
-std::vector<Medicine*> PharmacyBranch::findByName(const std::string& name) const {
-    std::vector<Medicine*> result;
+/**
+ * @brief Найти лекарство по названию.
+ */
+std::vector<std::reference_wrapper<Medicine>> PharmacyBranch::findByName(const std::string& name) const {
+    std::vector<std::reference_wrapper<Medicine>> result;
     for (auto m : medicines) {
-        if (m->getName() == name) result.push_back(m);
+        if (m.get().getName() == name) result.push_back(m);
     }
     return result;
 }
