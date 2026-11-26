@@ -2,7 +2,7 @@
 
 namespace miit::algebra
 {
-    Task2::Task2(const std::size_t rows, const std::size_t cols, const Generator& generator)
+    Task2::Task2(const std::size_t rows, const std::size_t cols, Generator& generator)
         : Exercise(rows, cols, generator) {}
 
     Task2::Task2(const Matrix<int>& matrix) : Exercise(matrix) {}
@@ -23,3 +23,4 @@ namespace miit::algebra
         }
     }
 }
+
