@@ -11,7 +11,7 @@
 using namespace miit::algebra;
 
 /**
- * @brief Класс приложения, инкапсулирующий логику работы.
+ * @brief Класс приложения, инкапсулирующий логику работы с матрицами.
  */
 class Application
 {
@@ -24,6 +24,12 @@ private:
     static const int DEFAULT_MIN_VAL = -10;
     static const int DEFAULT_MAX_VAL = 10;
 
+    /**
+     * @brief Запуск первой задачи.
+     * @param rows Количество строк.
+     * @param cols Количество столбцов.
+     * @param gen Ссылка на выбранный генератор.
+     */
     void runTask1(const std::size_t rows, const std::size_t cols, Generator& gen)
     {
         std::cout << "\n--- Задача 1: заменить минимальный по модулю "
@@ -38,6 +44,9 @@ private:
     }
 
 public:
+    /**
+     * @brief Основной цикл выполнения программы.
+     */
     void run()
     {
         setlocale(LC_ALL, "Russian");
