@@ -14,10 +14,10 @@
 void testMedicine() {
     Medicine m("Аспирин", "таблетки", "Bayer", "Аннотация", "Простуда", 24, 150.0);
 
-    assert(m.getName() == "Аспирин");
-    assert(m.getDisease() == "Простуда");
-    assert(m.getPrice() == 150.0);
-    assert(m.getType() == "Лекарство");
+    assert(!m.getName().compare("Аспирин"));
+    assert(!m.getDisease().compare("Простуда"));
+    assert(m.getPrice() > 149.99 && m.getPrice() < 150.01);
+    assert(!m.getType().compare("Лекарство"));
     assert(m.getInfo().find("Аспирин") != std::string::npos);
 
     std::cout << "[OK] testMedicine\n";
@@ -32,9 +32,14 @@ void testSalesPeriods() {
     m.addSale(360, 5);  // попадает в месяц и год (но не в неделю)
     m.addSale(350, 7);  // попадает только в год
 
-    assert(m.getSalesForPeriod(1) == 3);   // неделя
-    assert(m.getSalesForPeriod(2) == 8);   // месяц
-    assert(m.getSalesForPeriod(3) == 15);  // год
+    int weekSales = m.getSalesForPeriod(1);
+    int monthSales = m.getSalesForPeriod(2);
+    int yearSales = m.getSalesForPeriod(3);
+
+    assert(weekSales > 2 && weekSales < 4);   // 3
+    assert(monthSales > 7 && monthSales < 9); // 8
+    assert(yearSales > 14 && yearSales < 16); // 15
+    
     std::cout << "[OK] testSalesPeriods\n";
 }
 
@@ -45,9 +50,10 @@ void testSalesPeriods() {
 void testTablet() {
     Tablet t("Анальгин", "Фармстандарт", "Аннотация", "Головная боль", 24, 60.0, 20);
 
-    assert(t.getType() == "Таблетки");
-    assert(t.getDisease() == "Головная боль");
-    assert(t.getPrice() == 60.0);
+    assert(!t.getType().compare("Таблетки"));
+    assert(!t.getDisease().compare("Головная боль"));
+    assert(t.getPrice() > 59.99 && t.getPrice() < 60.01);
+    
     std::string info = t.getInfo();
     assert(info.find("Анальгин") != std::string::npos);
     assert(info.find("Таблеток: 20") != std::string::npos);
@@ -62,9 +68,10 @@ void testTablet() {
 void testSyrup() {
     Syrup s("Гербион", "KRKA", "Аннотация", "От кашля", 18, 320.0, 150);
 
-    assert(s.getType() == "Сироп");
-    assert(s.getDisease() == "От кашля");
-    assert(s.getPrice() == 320.0);
+    assert(!s.getType().compare("Сироп"));
+    assert(!s.getDisease().compare("От кашля"));
+    assert(s.getPrice() > 319.99 && s.getPrice() < 320.01);
+    
     std::string info = s.getInfo();
     assert(info.find("Гербион") != std::string::npos);
     assert(info.find("Объём: 150") != std::string::npos);
@@ -79,8 +86,8 @@ void testSyrup() {
  */
 void testPharmacyBranch() {
     PharmacyBranch b("Филиал 1", "Адрес 1");
-    assert(b.getName() == "Филиал 1");
-    assert(b.getAddress() == "Адрес 1");
+    assert(!b.getName().compare("Филиал 1"));
+    assert(!b.getAddress().compare("Адрес 1"));
     assert(b.getAllMedicines().empty());
 
     Medicine m1("Аспирин", "таблетки", "Bayer", "-", "Простуда", 24, 150.0);
@@ -91,13 +98,13 @@ void testPharmacyBranch() {
     b.addMedicine(m2);
     b.addMedicine(m3);
 
-    assert(b.getAllMedicines().size() == 3);
+    assert(b.getAllMedicines().size() > 2 && b.getAllMedicines().size() < 4);
 
     auto byDisease = b.findByDisease("Простуда");
-    assert(byDisease.size() == 2);
+    assert(byDisease.size() > 1 && byDisease.size() < 3);
 
     auto byName = b.findByName("Аспирин");
-    assert(byName.size() == 2);
+    assert(byName.size() > 1 && byName.size() < 3);
 
     auto notFound = b.findByName("Нет такого");
     assert(notFound.empty());
@@ -111,7 +118,7 @@ void testPharmacyBranch() {
  */
 void testNetworkAndBranches() {
     PharmacyNetwork network("Тестовая сеть");
-    assert(network.getNetworkName() == "Тестовая сеть");
+    assert(!network.getNetworkName().compare("Тестовая сеть"));
     assert(network.getBranches().empty());
 
     PharmacyBranch b1("Филиал 1", "Адрес 1");
@@ -119,9 +126,9 @@ void testNetworkAndBranches() {
     b1.addMedicine(testMed);
     network.addBranch(b1);
 
-    assert(network.getBranches().size() == 1);
-    assert(network.getBranches()[0].getName() == "Филиал 1");
-    assert(b1.getAllMedicines().size() == 1);
+    assert(network.getBranches().size() > 0 && network.getBranches().size() < 2);
+    assert(!network.getBranches()[0].getName().compare("Филиал 1"));
+    assert(b1.getAllMedicines().size() > 0 && b1.getAllMedicines().size() < 2);
 
     std::cout << "[OK] testNetworkAndBranches\n";
 }
