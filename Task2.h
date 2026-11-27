@@ -4,18 +4,19 @@
 namespace miit::algebra
 {
     /**
-     * @brief Задача 2: удалить все столбцы, в которых первый элемент больше последнего.
+     * @brief Задача 2: удалить все столбцы, в которых первый элемент
+     *        больше последнего.
      */
     class Task2 : public Exercise
     {
     public:
         /**
-         * @brief Конструктор с инициализацией матрицы через генератор.
+         * @brief Конструктор с размерами и генератором.
          * @param rows Количество строк.
          * @param cols Количество столбцов.
-         * @param generator Ссылка на генератор значений.
+         * @param generator Генератор значений.
          */
-        Task2(const std::size_t rows, const std::size_t cols, Generator& generator);
+        Task2(const std::size_t rows, const std::size_t cols, const Generator& generator);
 
         /**
          * @brief Конструктор с готовой матрицей.
@@ -24,9 +25,8 @@ namespace miit::algebra
         explicit Task2(const Matrix<int>& matrix);
 
         /**
-         * @brief Выполнить алгоритм решения задачи.
+         * @brief Решить задачу.
          */
         void solve() override;
     };
 }
-
