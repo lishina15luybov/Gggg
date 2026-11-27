@@ -6,24 +6,21 @@
 namespace miit::algebra
 {
     /**
-     * @brief Базовый абстрактный класс упражнения над матрицей.
+     * @brief Базовый класс упражнения над матрицей.
      */
     class Exercise
     {
     protected:
-        /**
-         * @brief Матрица для выполнения операций.
-         */
         Matrix<int> matrix;
 
     public:
         /**
-         * @brief Конструктор с инициализацией матрицы через генератор.
-         * @param rows Количество строк матрицы.
-         * @param cols Количество столбцов матрицы.
-         * @param generator Ссылка на генератор значений.
+         * @brief Конструктор с размерами и генератором.
+         * @param rows Количество строк.
+         * @param cols Количество столбцов.
+         * @param generator Генератор значений.
          */
-        Exercise(const std::size_t rows, const std::size_t cols, Generator& generator);
+        Exercise(const std::size_t rows, const std::size_t cols, const Generator& generator);
 
         /**
          * @brief Конструктор с готовой матрицей.
@@ -42,14 +39,14 @@ namespace miit::algebra
         virtual void solve() = 0;
 
         /**
-         * @brief Получить текущую матрицу.
+         * @brief Получить матрицу.
          * @return Константная ссылка на матрицу.
          */
         const Matrix<int>& getMatrix() const;
 
         /**
-         * @brief Получить строковое представление матрицы.
-         * @return Строка с элементами матрицы.
+         * @brief Строковое представление матрицы.
+         * @return Строка с матрицей.
          */
         std::string toString() const;
     };
