@@ -13,6 +13,6 @@ namespace miit::algebra
          * @brief Сгенерировать значение.
          * @return Всегда возвращает 0.
          */
-        int generate() override;
+        int generate() const override;
     };
 }
