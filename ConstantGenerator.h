@@ -22,6 +22,6 @@ namespace miit::algebra
          * @brief Сгенерировать значение.
          * @return Константное значение.
          */
-        int generate() override;
+        int generate() const override;
     };
 }
