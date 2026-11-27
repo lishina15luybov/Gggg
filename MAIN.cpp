@@ -11,7 +11,7 @@
 using namespace miit::algebra;
 
 /**
- * @brief Класс приложения, инкапсулирующий логику работы с матрицами.
+ * @brief Класс приложения, инкапсулирующий логику работы.
  */
 class Application
 {
@@ -24,29 +24,20 @@ private:
     static const int DEFAULT_MIN_VAL = -10;
     static const int DEFAULT_MAX_VAL = 10;
 
-    /**
-     * @brief Запуск первой задачи.
-     * @param rows Количество строк.
-     * @param cols Количество столбцов.
-     * @param gen Ссылка на выбранный генератор.
-     */
-    void runTask1(const std::size_t rows, const std::size_t cols, Generator& gen)
+    void runTask1(const std::size_t rows, const std::size_t cols, const Generator& gen)
     {
         std::cout << "\n--- Задача 1: заменить минимальный по модулю "
                      "элемент каждого столбца нулем ---\n";
         Task1 task1(rows, cols, gen);
         std::cout << "Исходная матрица:\n" << task1.toString();
         
-        Exercise* exercise = &task1; 
-        exercise->solve();
+        Exercise& exercise = task1; 
+        exercise.solve();
         
         std::cout << "Результат:\n" << task1.toString();
     }
 
 public:
-    /**
-     * @brief Основной цикл выполнения программы.
-     */
     void run()
     {
         setlocale(LC_ALL, "Russian");
@@ -111,24 +102,14 @@ public:
 
         std::cout << "\n--- Задача 2: удалить столбцы, где первый элемент "
                      "больше последнего ---\n";
+        std::cout << "Введите элементы матрицы:\n";
 
-        Matrix<int> m2;
-        m2.fill(rows, cols, 0);
-
-        for (std::size_t i = 0; i < rows; ++i)
-        {
-            for (std::size_t j = 0; j < cols; ++j)
-            {
-                std::cout << "Элемент [" << i << "][" << j << "]: ";
-                std::cin >> m2[i][j]; 
-            }
-        }
-
-        Task2 task2(m2);
+        IStreamGenerator inputGen(std::cin);
+        Task2 task2(rows, cols, inputGen);
         std::cout << "Исходная матрица:\n" << task2.toString();
         
-        Exercise* exercise2 = &task2;
-        exercise2->solve();
+        Exercise& exercise2 = task2;
+        exercise2.solve();
         
         std::cout << "Результат:\n" << task2.toString();
 
