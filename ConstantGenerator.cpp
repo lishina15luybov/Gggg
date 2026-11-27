@@ -12,5 +12,5 @@ namespace miit::algebra
      * @brief Сгенерировать значение.
      * @return Константное значение.
      */
-    int ConstantGenerator::generate() { return value; }
+    int ConstantGenerator::generate() const { return value; }
 }
