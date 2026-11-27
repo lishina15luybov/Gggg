@@ -2,5 +2,5 @@
 
 namespace miit::algebra
 {
-    int ZeroGenerator::generate() { return 0; }
+    int ZeroGenerator::generate() const { return 0; }
 }
