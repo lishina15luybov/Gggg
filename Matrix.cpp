@@ -66,12 +66,25 @@ namespace miit::algebra
             std::fill(row.begin(), row.end(), value);
         }
     }
+
     template <typename T>
     void Matrix<T>::fill(const std::size_t newRows, const std::size_t newCols, const T& value)
     {
         rows = newRows;
         cols = newCols;
         data.assign(rows, std::vector<T>(cols, value));
+    }
+
+    template <typename T>
+    void Matrix<T>::fill(const Generator& generator)
+    {
+        for (std::size_t i = 0; i < rows; ++i)
+        {
+            for (std::size_t j = 0; j < cols; ++j)
+            {
+                data[i][j] = static_cast<T>(generator.generate());
+            }
+        }
     }
 
     template <typename T>
